@@ -1,14 +1,14 @@
 <div class="transaction_box">
-  <h1>Processing SLP Transaction</h1>
+  <h1>Processing ZSLP Transaction</h1>
   <h6><%= tx.tx.h %></h6>
   <p>
-    SLPDB is currently processing this transaction. During high load it may take longer to process transactions. Please try again in a few moments.
+    ZSLPDB is currently processing this transaction. During high load it may take longer to process transactions. Please try again in a few moments.
   </p>
   <hr>
   <p>
     <a class="button" onclick="window.location.reload()" role="button">Reload Page</a>
-    <a target="_blank" href="https://explorer.bitcoin.com/bch/tx/<%= tx.tx.h %>">
-      <button type="button" class="button right">View on BCH Explorer</button>
+    <a target="_blank" href="https://explorer.zcl.zeltrez.io/tx/<%= tx.tx.h %>">
+      <button type="button" class="button right">View on Zclassic Explorer</button>
     </a>
   </p>
 </div>

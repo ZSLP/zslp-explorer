@@ -320,7 +320,7 @@ app.util = {
 
     if (window.sessionStorage.getItem('tokenimgerr_'+tokenIdHex) === null) {
       $img = $('<img>');
-      $img.attr('src', `https://tokens.bch.sx/${size}/${tokenIdHex}.png`);
+      $img.attr('src', `http://tokens.zslp.org/${size}/${tokenIdHex}.png`);
 
       $img.on('error', function() {
         window.sessionStorage.setItem('tokenimgerr_'+tokenIdHex, true);
@@ -401,30 +401,7 @@ app.util = {
               "limit": 1
             }
           }),
-          app.bitdb.query({
-            "v": 3,
-            "q": {
-              "db": ["u", "c"],
-              "find": {
-                "out.h1": "01010101",
-                "blk.i": {
-                  "$gte": 563620
-                },
-                "out.s2": {
-                  "$regex": "^"+search_value+".*",
-                  "$options": "i"
-                }
-              },
-              "sort": {
-                "blk.i": -1
-              },
-              "limit": 10
-            },
-            "r": {
-              "f": "[ .[] | ( .out[] | select(.b0.op==106) ) as $outWithData | { blockheight: .blk.i?, blockhash: .blk.h?, txid: .tx.h?, name: $outWithData.s2, data: $outWithData.h3 } ]"
-            }
-          }),
-        ]).then(([tokens, transactions, cashaccounts]) => {
+        ]).then(([tokens, transactions]) => {
           let sugs = [];
 
           for (let m of tokens.t) {
@@ -469,22 +446,6 @@ app.util = {
                 category: 'Tx'
               }
             });
-          }
-
-          cashaccounts = cashaccounts.u.concat(cashaccounts.c);
-          for (let m of cashaccounts) {
-            const cash_addr = app.util.raw_address_to_cash_address(m.data);
-            if (cash_addr !== null) {
-              const slp_addr = slpjs.Utils.toSlpAddress(cash_addr);
-              sugs.push({
-                value: slp_addr,
-                data: {
-                  url: '/#address/'+slp_addr, // TODO decode address
-                  html: app.util.get_cash_account_html(m),
-                  category: 'Cash Accounts'
-                }
-              });
-            }
           }
 
           if (search_value.match(/^\d+$/)) {
@@ -626,7 +587,7 @@ app.slpdb = {
       return resolve(false);
     }
     const b64 = btoa_ext(JSON.stringify(query));
-    const url = "https://slpdb.fountainhead.cash/q/" + b64;
+    const url = "http://zslpdb.zslp.org/q/" + b64;
 
     console.log(url)
 
@@ -1757,7 +1718,7 @@ app.slpsocket = {
       return resolve(false);
     }
     const b64 = btoa_ext(JSON.stringify(query));
-    const url = "https://slpsocket.fountainhead.cash/s/" + b64;
+    const url = "http://zslpsocket.zslp.org/s/" + b64;
 
     const sse = new EventSource(url);
     sse.onmessage = (e) => fn(JSON.parse(e.data));
@@ -1799,7 +1760,7 @@ app.bitdb = {
       return resolve(false);
     }
     const b64 = btoa_ext(JSON.stringify(query));
-    const url = "https://bitdb2.fountainhead.cash/q/" + b64;
+    const url = "http://bitdb.zslp.org/q/" + b64;
 
     console.log(url)
 
@@ -3171,31 +3132,23 @@ app.init_address_page = (address) =>
       app.slpdb.query(app.slpdb.count_tokens_by_slp_address(address)),
       app.slpdb.query(app.slpdb.count_total_transactions_by_slp_address(address)),
       app.slpdb.query(app.slpdb.count_address_burn_transactions(address)),
-      app.bitdb.query(app.bitdb.get_cashaccount(app.util.cash_address_to_raw_address(slpjs.Utils.toCashAddress(address)))),
       app.slpdb.query(app.slpdb.count_address_sent_transactions(address)),
       app.slpdb.query(app.slpdb.count_address_recv_transactions(address)),
     ]).then(([
       total_tokens,
       total_transactions,
       total_address_burn_transactions,
-      cashaccount,
       total_sent_transactions,
       total_recv_transactions,
     ]) => {
       total_tokens = app.util.extract_total(total_tokens);
       total_transactions = app.util.extract_total(total_transactions);
       total_address_burn_transactions = app.util.extract_total(total_address_burn_transactions);
-
-      cashaccount = cashaccount.u.length > 0 ? cashaccount.u[0]
-                  : cashaccount.c.length > 0 ? cashaccount.c[0]
-                  : null;
-
       total_sent_transactions = app.util.extract_total(total_sent_transactions);
       total_recv_transactions = app.util.extract_total(total_recv_transactions);
 
       $('main[role=main]').html(app.template.address_page({
         address: address,
-        cashaccount: cashaccount,
         total_tokens: total_tokens.a,
         total_transactions: total_transactions.c+total_transactions.u,
         total_address_burn_transactions: total_address_burn_transactions.g,
@@ -3516,26 +3469,26 @@ app.router = (whash, push_history = true) => {
   switch (path) {
     case '':
     case '#':
-      document.title = 'SLP Explorer';
+      document.title = 'ZSLP Explorer';
       method = () => {
           $('html').addClass('index-page');
           return app.init_index_page();
       };
       break;
     case '#alltokens':
-      document.title = 'All Tokens - SLP Explorer';
+      document.title = 'All Tokens - ZSLP Explorer';
       method = () => app.init_all_tokens_page();
       break;
     case '#tx':
-      document.title = 'Transaction ' + key[0] + ' - SLP Explorer';
+      document.title = 'Transaction ' + key[0] + ' - ZSLP Explorer';
       method = () => app.init_tx_page(key[0], key.slice(1));
       break;
     case '#bchtx':
-      document.title = 'Bitcoin Cash Transaction ' + key[0] + ' - SLP Explorer';
+      document.title = 'Zclassic Transaction ' + key[0] + ' - ZSLP Explorer';
       method = () => app.init_nonslp_tx_page(key[0], key.slice(1));
       break;
     case '#block':
-      document.title = 'Block ' + key[0] + ' - SLP Explorer';
+      document.title = 'Block ' + key[0] + ' - ZSLP Explorer';
       if (key[0] === 'mempool') {
         method = () => app.init_block_mempool_page();
       } else {
@@ -3543,15 +3496,15 @@ app.router = (whash, push_history = true) => {
       }
       break;
     case '#token':
-      document.title = 'Token ' + key[0] + ' - SLP Explorer';
+      document.title = 'Token ' + key[0] + ' - ZSLP Explorer';
       method = () => app.init_token_page(key[0]);
       break;
     case '#address':
-      document.title = 'Address ' + key[0] + ' - SLP Explorer';
+      document.title = 'Address ' + key[0] + ' - ZSLP Explorer';
       method = () => app.init_address_page(key[0]);
       break;
     default:
-      document.title = '404 | SLP Explorer';
+      document.title = '404 | ZSLP Explorer';
       console.error('app.router path not found', whash);
       method = () => app.init_404_page();
       break;

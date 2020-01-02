@@ -3,11 +3,11 @@
     <div class="token-icon-large left"><img src="/img/bch-logo.png"></div>
     <div>
       <h2 class="text-white">
-        NON-SLP Transaction
+        NON-ZSLP Transaction
       </h2>
       <h6><%= tx.tx.h %></h6>
-      <a target="_blank" href="https://explorer.bitcoin.com/bch/tx/<%= tx.tx.h %>">
-        <button type="button" class="button right">View on BCH Explorer</button>
+      <a target="_blank" href="https://explorer.zcl.zeltrez.io/tx/<%= tx.tx.h %>">
+        <button type="button" class="button right">View on Zclassic Explorer</button>
       </a>
     </div>
   </div>
@@ -27,7 +27,7 @@
             <tbody>
               <tr>
                 <th role="col">Type</th>
-                <td>BCH</td>
+                <td>ZCL</td>
               </tr>
               <tr>
                 <th role="col">Block</th>
@@ -59,7 +59,7 @@
                   <% if (slp) { %>
                     <%= slp.invalidReason %>
                   <% } else { %>
-                    This is not a SLP transaction.
+                    This is not a ZSLP transaction.
                   <% } %>
                 </td>
               </tr>
@@ -100,7 +100,7 @@
                         <% if (typeof m.e.a !== 'undefined') { %>
                           <a class="address" href="/#address/<%= slpjs.Utils.toCashAddress(m.e.a) %>"><%= slpjs.Utils.toCashAddress(m.e.a) %></a>
                         <% } else { %>
-                          SLPDB Address Error
+                          ZSLPDB Address Error
                         <% } %>
                       </td>
                     </tr>

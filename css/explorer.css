@@ -11,7 +11,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 ::selection {
-    background-color: #60bd6c;
+    background-color: #D37435;
     color: #fff;
 }
 
@@ -69,7 +69,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 /* Buttons and Links */
 a {
-    color: #60bd6c;
+    color: #D37435;
     text-decoration: none;
     outline: none;
 }
@@ -86,7 +86,7 @@ a:hover, a.txid:hover, a.tokenid:hover { text-decoration: underline; }
     border: 1px solid transparent;
     padding: .75rem 1.5rem;
     font-size: .8rem;
-    background-color: #60bd6c;
+    background-color: #D37435;
     color: #FFF;
     line-height: 1.5;
     text-transform: uppercase;
@@ -255,7 +255,7 @@ header li input::placeholder {
     font-size: 3.2em;
     font-weight: 700;
     margin-bottom: .5em;
-    color: #60bd6c;
+    color: #D37435;
 }
 
 .header_infobox h2 {
@@ -377,7 +377,7 @@ tr.burnt-tx {
 }
 
 .pagination li.active a {
-  background-color: #60bd6c;
+  background-color: #D37435;
   color: #FFF;
 }
 
@@ -527,7 +527,7 @@ html.full-width .row {
     width: 73px;
     height: 5px;
     margin-top: 6px;
-    background-color: #5dbc6c;
+    background-color: rgb(196, 116, 62);
 }
 
 .col-sm-12 {
@@ -807,7 +807,7 @@ html.index-page header {
 .plot-time-selector .active {
     text-decoration:underline;
     font-weight:bold;
-    color: #60bd6c;
+    color: #D37435;
 }
 .plot-time-selector span {
     margin: 0 10px;

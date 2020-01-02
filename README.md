@@ -1,7 +1,7 @@
 # SLP Token Explorer
 
-A open source block explorer for Bitcoin Cash tokens based on the Simple Ledger Protocol (SLP).
-
+A open source block explorer for a simple token system for Zclassic
+based on Simple Ledger Protocol
 ![screenshot](/img/screenshot_large.jpg)
 
 ## How to add Token Icon?
