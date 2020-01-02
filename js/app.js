@@ -320,7 +320,7 @@ app.util = {
 
     if (window.sessionStorage.getItem('tokenimgerr_'+tokenIdHex) === null) {
       $img = $('<img>');
-      $img.attr('src', `http://tokens.zslp.org/${size}/${tokenIdHex}.png`);
+      $img.attr('src', `https://tokens.zslp.org/${size}/${tokenIdHex}.png`);
 
       $img.on('error', function() {
         window.sessionStorage.setItem('tokenimgerr_'+tokenIdHex, true);
@@ -587,7 +587,7 @@ app.slpdb = {
       return resolve(false);
     }
     const b64 = btoa_ext(JSON.stringify(query));
-    const url = "http://zslpdb.zslp.org/q/" + b64;
+    const url = "https://zslpdb.zslp.org/q/" + b64;
 
     console.log(url)
 
@@ -1718,7 +1718,7 @@ app.slpsocket = {
       return resolve(false);
     }
     const b64 = btoa_ext(JSON.stringify(query));
-    const url = "http://zslpsocket.zslp.org/s/" + b64;
+    const url = "https://zslpsocket.zslp.org/s/" + b64;
 
     const sse = new EventSource(url);
     sse.onmessage = (e) => fn(JSON.parse(e.data));
@@ -1760,7 +1760,7 @@ app.bitdb = {
       return resolve(false);
     }
     const b64 = btoa_ext(JSON.stringify(query));
-    const url = "http://bitdb.zslp.org/q/" + b64;
+    const url = "https://bitdb.zslp.org/q/" + b64;
 
     console.log(url)
 
