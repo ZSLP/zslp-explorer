@@ -2363,7 +2363,7 @@ app.init_index_page = () =>
     });
 
     app.slpsocket.on_mempool = (sna) => {
-      if (! sna.slp.valid) {
+      if (! sna.slp) {
         return;
       }
 
@@ -2671,7 +2671,7 @@ app.init_block_mempool_page = (height) =>
       }
 
       app.slpsocket.on_mempool = (sna) => {
-        if (! sna.slp.valid) {
+        if (! sna.slp) {
           return;
         }
 
@@ -3087,7 +3087,7 @@ app.init_token_page = (tokenIdHex) =>
       });
 
       app.slpsocket.on_mempool = (sna) => {
-        if (! sna.slp.valid) {
+        if (! sna.slp) {
           return;
         }
 
@@ -3402,7 +3402,7 @@ app.init_address_page = (address) =>
       });
 
       app.slpsocket.on_mempool = (sna) => {
-        if (! sna.slp.valid) {
+        if (! sna.slp) {
           return;
         }
 
